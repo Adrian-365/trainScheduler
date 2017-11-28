@@ -14,7 +14,7 @@ var database = firebase.database();
 // define variables //
 var name = "";
 var destination = "";
-var firstTraintime = moment().format('hh:mm');
+var firstTraintime = moment().format('h:mm');
 var frequency = 0;
 
 // submit-button onclick function //
@@ -51,6 +51,8 @@ database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", funct
     console.log("frequency: "+ firebaseFrequency);
     // Current Time
     var currentTime = moment();
+    $('#currTime').empty();
+    $('#currTime').append(moment(currentTime).format("h:mm a"))
     console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
     // Difference between the times
     var diffTime = moment().diff(moment(firebaseFirstTrainTime), "minutes");
@@ -62,8 +64,8 @@ database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", funct
     var tMinutesTillTrain = firebaseFrequency - tRemainder;
     console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
     // Next Train
-    var nextTrain = moment().add(tMinutesTillTrain, "minutes").format('hh:mm');
-    console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"))
+    var nextTrain = moment().add(tMinutesTillTrain, "minutes").format('h:mm a');
+    console.log("ARRIVAL TIME: " + moment(nextTrain).format("h:mm a"))
 
 
 
