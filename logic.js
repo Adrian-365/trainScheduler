@@ -10,11 +10,11 @@
   };
   firebase.initializeApp(config);
 
-  var database = firebase.database();
+var database = firebase.database();
 // define variables //
 var name = "";
 var destination = "";
-var firstTraintime = 0;
+var firstTraintime = moment().format('hh:mm');
 var frequency = 0;
 
 // submit-button onclick function //
@@ -40,8 +40,8 @@ database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", funct
 // Variables for the firebase data //
 	var firebaseName = snapshot.val().name;
 	var firebaseDestination = snapshot.val().destination;
-	var firebaseFrequency = snapshot.val().frequency;
-	var firebaseFirstTrainTime = snapshot.val().moment(currentTime).format("hh:mm");
+  var firebaseFrequency = snapshot.val().frequency;
+	var firebaseFirstTrainTime = snapshot.val().firstTrainTime;
 
 ///-------------------
 
@@ -62,7 +62,7 @@ database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", funct
     var tMinutesTillTrain = firebaseFrequency - tRemainder;
     console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
     // Next Train
-    var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+    var nextTrain = moment().add(tMinutesTillTrain, "minutes").format('hh:mm');
     console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"))
 
 
